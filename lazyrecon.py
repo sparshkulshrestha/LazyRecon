@@ -18,11 +18,11 @@ def subdomain(domain):
 	
 	os.system("amass enum -d {} -o ~/Downloads/targets/{}/amass.txt".format(domain, domain))
 	
-	print("Commonspeak wordlist bruteforce completed-------------------------")
+	print("\n\n-----------------Commonspeak wordlist bruteforce completed-------------------------\n\n")
 		
-	print("All tools executed successfully------------------------------------")	
+	print("\n\n---------------------All tools executed successfully---------------------------------\n\n")	
 
-	print("Formatting begins /\/\/\/\/\/\/\------------------------------------")
+	print("\n\n-------------------------Formatting begins --------------------------------\n\n")
 
 	os.system("echo {} >> ~/Downloads/targets/{}/{}.txt".format(domain, domain, domain))
 	
@@ -32,7 +32,7 @@ def subdomain(domain):
 	
 	os.system("cat ~/Downloads/targets/{}/{}.txt |cut -d ',' -f2 | sort -u >> ~/Downloads/targets/{}/fdns.txt".format(domain, domain, domain))
 	
-	os.system("rm /home/sparsh/Downloads/targets/{}/{}.txt".format(domain, domain))
+	os.system("rm ~/Downloads/targets/{}/{}.txt".format(domain, domain))
 	
 	os.system("cat ~/Downloads/targets/{}/sublist3r.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
 	
@@ -48,32 +48,44 @@ def subdomain(domain):
 	
 	os.system("sort ~/Downloads/targets/{}/merged.txt | uniq >> ~/Downloads/targets/{}/{}.txt".format(domain, domain, domain))
 
-	print("-----------------------Formatting Done-------------------------------")	
+	print("\n\n-----------------------Formatting Done-------------------------------\n\n")	
 
-	print("------------Results are saved in specified folder--------------------")
+	print("\n\n------------Results are saved in specified folder--------------------\n\n")
 
-	print("------------------Lazy Recon Execution Completed---------------------")
+	print("\n\n------------------Lazy Recon Execution Completed---------------------\n\n")
 	
 	return
 
 
-#def uphost(domain):
+def uphost(domain):
 	
-	#os.system("cat ~/Downloads/targets/{}/{}.txt | filter-resolved > ~/Downloads/targets/{}/uphost-{}.txt".format(domain,domain,domain,domain))
+	os.system("cat ~/Downloads/targets/{}/{}.txt | filter-resolved > ~/Downloads/targets/{}/uphost-{}.txt".format(domain,domain,domain,domain))
 
-	#return
+	return
 
 
 
 
 def main():
 	
-	subdomain('ENTER TARGET DOMAIN')
-	#uphost('ENTER TARGET DOMAIN')
-
+		
+	banner =  """ 
+   _     ____  ____ ___  _ ____  _____ ____ ____  _
+ / \   /  _ \/_   \\  \///  __\/  __//   _Y  _ \/ \  /|
+ | |   | / \| /   / \  / |  \/||  \  |  / | / \|| |\ ||
+ | |_/\| |-||/   /_ / /  |    /|  /_ |  \_| \_/|| | \||
+ \____/\_/ \|\____//_/   \_/\_\\____\\____|____/\_/  \|
+ https://twitter.com/d0tdotslash"""
+	
+	print banner
+	print ("\n\n Usage : python lazyrecon.py\n\n")
+	domain = raw_input ("Enter target domain:")
+	print domain
+	subdomain(domain)
+	uphost(domain)
+	print banner
 
 main()
-
 
 
 
