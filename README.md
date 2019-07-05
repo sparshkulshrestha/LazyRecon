@@ -31,3 +31,7 @@ This code was originally created for personal use for myself, so it's a bit mess
 new tool added : subfinder.<br>
 Now it will also take screenshots of found subdomains.<br>
 Now it will use crt.sh instead of certspotter.<br>
+
+# Inspired by:
+https://twitter.com/armaancrockroax <br>
+https://twitter.com/nahamsec <br>
