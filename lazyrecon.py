@@ -8,7 +8,9 @@ def subdomain(domain):
 
 	os.system("python ~/Downloads/dotdotslash/recon/passive/Sublist3r/sublist3r.py -d {} -t 10 -v -o ~/Downloads/targets/{}/sublist3r.txt".format(domain, domain))
 	
-	os.system("curl -s https://certspotter.com/api/v0/certs\?domain\={} |jq '.[].dns_names' | sed 's/\"//g' | sed 's/\*\.//g' | sort -u >> /home/sparsh/Downloads/targets/{}/certspot.txt".format(domain, domain))
+	os.system("~/Downloads/dotdotslash/recon/passive/subfinder/./subfinder -d {} -silent -o ~/Downloads/targets/{}/subfinder.txt".format(domain, domain))
+	
+	os.system("curl -s https://crt.sh/?q=%25.{} |  grep {} | grep TD | sed -e 's/<//g' | sed -e 's/>//g' | sed -e 's/TD//g' | sed -e 's/\///g' | sed -e 's/ //g' | sed -n '1!p' | sort -u  >> /home/sparsh/Downloads/targets/{}/certspot.txt".format(domain, domain))
 	
 	os.system("python ~/Downloads/dotdotslash/recon/passive/censys-subdomain-finder/censys_subdomain_finder.py {} -o ~/Downloads/targets/{}/censys.txt".format(domain, domain))
 	
@@ -35,6 +37,8 @@ def subdomain(domain):
 	os.system("rm ~/Downloads/targets/{}/{}.txt".format(domain, domain))
 	
 	os.system("cat ~/Downloads/targets/{}/sublist3r.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
+	
+	os.system("cat ~/Downloads/targets/{}/subfinder.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
 	
 	os.system("cat ~/Downloads/targets/{}/certspot.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
 	
@@ -63,7 +67,11 @@ def uphost(domain):
 
 	return
 
+def httpss(domain): #take screenshots
 
+	os.system("python ~/Downloads/dotdotslash/recon/passive/EyeWitness/EyeWitness.py --web -f ~/Downloads/targets/{}/uphost-{}.txt -d ~/Downloads/targets/{}/httpss".format(domain,domain,domain))
+
+	return
 
 
 def main():
