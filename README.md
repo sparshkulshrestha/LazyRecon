@@ -13,7 +13,7 @@ Take http screenshot using EyeWitness.<br>
 
 
 # Requirements
-This requires following Bug Bounty Hunting Tools in order for the tools to work.<br>
+This requires following Bug Bounty Hunting Tools in your ~/Downloads/recon/passive directory for script to work.<br>
 
 https://github.com/aboul3la/Sublist3r<br>
 https://github.com/subfinder/subfinder<br>
