@@ -27,7 +27,7 @@ https://github.com/FortyNorthSecurity/EyeWitness<br>
 # Warning: 
 This code was originally created for personal use for myself, so it's a bit messy and hopefully it'll be cleaned up with more features in a later release.
 
-# Usage:
+# Demo:
 
 ![](ezgif.com-resize.gif)
 
