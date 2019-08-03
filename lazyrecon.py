@@ -6,15 +6,15 @@ def subdomain(domain):
 	
 	os.system("mkdir ~/Downloads/targets/"+domain)
 
-	os.system("python ~/Downloads/dotdotslash/recon/passive/Sublist3r/sublist3r.py -d {} -t 10 -v -o ~/Downloads/targets/{}/sublist3r.txt".format(domain, domain))
+	os.system("python ~/Downloads/recon/passive/Sublist3r/sublist3r.py -d {} -t 10 -v -o ~/Downloads/targets/{}/sublist3r.txt".format(domain, domain))
 	
-	os.system("~/Downloads/dotdotslash/recon/passive/subfinder/./subfinder -d {} -silent -o ~/Downloads/targets/{}/subfinder.txt".format(domain, domain))
+	os.system("~/Downloads/recon/passive/subfinder/./subfinder -d {} -silent -o ~/Downloads/targets/{}/subfinder.txt".format(domain, domain))
 	
 	os.system("curl -s https://crt.sh/?q=%25.{} |  grep {} | grep TD | sed -e 's/<//g' | sed -e 's/>//g' | sed -e 's/TD//g' | sed -e 's/\///g' | sed -e 's/ //g' | sed -n '1!p' | sort -u  >> /home/sparsh/Downloads/targets/{}/certspot.txt".format(domain, domain))
 	
-	os.system("python ~/Downloads/dotdotslash/recon/passive/censys-subdomain-finder/censys_subdomain_finder.py {} -o ~/Downloads/targets/{}/censys.txt".format(domain, domain))
+	os.system("python ~/Downloads/recon/passive/censys-subdomain-finder/censys_subdomain_finder.py {} -o ~/Downloads/targets/{}/censys.txt".format(domain, domain))
 	
-	os.system("~/go/src/gobuster/./gobuster -m dns -t 50 -u {} -w /home/sparsh/Downloads/dotdotslash/commonspeak2-wordlists/subdomains/subdomains.txt -o /home/sparsh/Downloads/targets/{}/gobuster.txt".format(domain,domain))
+	os.system("~/go/src/gobuster/./gobuster -m dns -t 50 -u {} -w ~/Downloads/commonspeak2-wordlists/subdomains/subdomains.txt -o ~/Downloads/targets/{}/gobuster.txt".format(domain,domain))
 	
 	os.system("cat ~/Downloads/targets/{}/gobuster.txt | cut -d ':' -f2 | sort -u >> ~/Downloads/targets/{}/gobuster_final.txt".format(domain,domain))
 	
@@ -69,7 +69,7 @@ def uphost(domain):
 
 def httpss(domain): #take screenshots
 
-	os.system("python ~/Downloads/dotdotslash/recon/passive/EyeWitness/EyeWitness.py --web -f ~/Downloads/targets/{}/uphost-{}.txt -d ~/Downloads/targets/{}/httpss".format(domain,domain,domain))
+	os.system("python ~/Downloads/recon/passive/EyeWitness/EyeWitness.py --web -f ~/Downloads/targets/{}/uphost-{}.txt -d ~/Downloads/targets/{}/httpss".format(domain,domain,domain))
 
 	return
 
