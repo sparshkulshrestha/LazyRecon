@@ -27,6 +27,10 @@ https://github.com/FortyNorthSecurity/EyeWitness<br>
 # Warning: 
 This code was originally created for personal use for myself, so it's a bit messy and hopefully it'll be cleaned up with more features in a later release.
 
+# Usage:
+
+![](ezgif.com-resize.gif)
+
 # Whats New:
 new tool added : subfinder.<br>
 Now it will also take screenshots of found subdomains.<br>
