@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import os
+import sys
 
 def subdomain(domain):
 	
@@ -87,7 +88,7 @@ def main():
 	
 	print banner
 	print ("\n\n Usage : python lazyrecon.py\n\n")
-	domain = raw_input ("Enter target domain:")
+	domain = sys.argv[1]
 	print domain
 	subdomain(domain)
 	uphost(domain)
