@@ -29,13 +29,13 @@ def subdomain(domain):
 
 	os.system("echo {} >> ~/Downloads/targets/{}/{}.txt".format(domain, domain, domain))
 	
-	#os.system("python ~/Downloads/dotdotslash/recon/passive/fdns.py ~/Downloads/targets/{}/{}.txt".format(domain, domain))
+	#os.system("python ~/Downloads/recon/passive/fdns.py ~/Downloads/targets/{}/{}.txt".format(domain, domain))
 	
-	os.system("mv ~/Desktop/{} ~/Downloads/targets/{}/{}.txt".format(domain, domain, domain))
+	#os.system("mv ~/Desktop/{} ~/Downloads/targets/{}/{}.txt".format(domain, domain, domain))
 	
-	os.system("cat ~/Downloads/targets/{}/{}.txt |cut -d ',' -f2 | sort -u >> ~/Downloads/targets/{}/fdns.txt".format(domain, domain, domain))
+	#os.system("cat ~/Downloads/targets/{}/{}.txt |cut -d ',' -f2 | sort -u >> ~/Downloads/targets/{}/fdns.txt".format(domain, domain, domain))
 	
-	os.system("rm ~/Downloads/targets/{}/{}.txt".format(domain, domain))
+	#os.system("rm ~/Downloads/targets/{}/{}.txt".format(domain, domain))
 	
 	os.system("cat ~/Downloads/targets/{}/sublist3r.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
 	
@@ -47,7 +47,7 @@ def subdomain(domain):
 	
 	os.system("cat ~/Downloads/targets/{}/gobuster_final.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
 	
-	os.system("cat ~/Downloads/targets/{}/fdns.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
+	#os.system("cat ~/Downloads/targets/{}/fdns.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
 	
 	os.system("cat ~/Downloads/targets/{}/amass.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
 	
