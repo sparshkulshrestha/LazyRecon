@@ -2,122 +2,108 @@
 
 import os
 import sys
+import subprocess
 
 def subdomain(domain):
-	
-	os.system("mkdir ~/Downloads/targets/"+domain)
 
-	os.system("python ~/Downloads/recon/passive/Sublist3r/sublist3r.py -d {} -t 10 -v -o ~/Downloads/targets/{}/sublist3r.txt".format(domain, domain))
-	
-	os.system("~/Downloads/recon/passive/subfinder/./subfinder -d {} -silent -o ~/Downloads/targets/{}/subfinder.txt".format(domain, domain))
-	
-	os.system("curl -s https://crt.sh/?q=%25.{} |  grep {} | grep TD | sed -e 's/<//g' | sed -e 's/>//g' | sed -e 's/TD//g' | sed -e 's/\///g' | sed -e 's/ //g' | sed -n '1!p' | sort -u  >> /home/sparsh/Downloads/targets/{}/certspot.txt".format(domain, domain))
-	
-	os.system("python ~/Downloads/recon/passive/censys-subdomain-finder/censys_subdomain_finder.py {} -o ~/Downloads/targets/{}/censys.txt".format(domain, domain))
-	
-	os.system("~/go/src/gobuster/./gobuster -m dns -t 50 -u {} -w ~/Downloads/commonspeak2-wordlists/subdomains/subdomains.txt -o ~/Downloads/targets/{}/gobuster.txt".format(domain,domain))
-	
-	os.system("cat ~/Downloads/targets/{}/gobuster.txt | cut -d ':' -f2 | sort -u >> ~/Downloads/targets/{}/gobuster_final.txt".format(domain,domain))
-	
-	os.system("amass enum -d {} -o ~/Downloads/targets/{}/amass.txt".format(domain, domain))
-	
-	print("\n\n-----------------Commonspeak wordlist bruteforce completed-------------------------\n\n")
-		
-	print("\n\n---------------------All tools executed successfully---------------------------------\n\n")	
+        os.system("mkdir /root/pentest/targets/"+domain)  #create a directory
 
-	print("\n\n-------------------------Formatting begins --------------------------------\n\n")
+        os.system("python /root/pentest/enumeration/Sublist3r/sublist3r.py -d {} -t 10 -v -o /root/pentest/targets/{}/sublist3r.txt".format(domain, domain)) #run sublist3r tool #1
 
-	os.system("echo {} >> ~/Downloads/targets/{}/{}.txt".format(domain, domain, domain))
-	
-	#os.system("python ~/Downloads/recon/passive/fdns.py ~/Downloads/targets/{}/{}.txt".format(domain, domain))
-	
-	#os.system("mv ~/Desktop/{} ~/Downloads/targets/{}/{}.txt".format(domain, domain, domain))
-	
-	#os.system("cat ~/Downloads/targets/{}/{}.txt |cut -d ',' -f2 | sort -u >> ~/Downloads/targets/{}/fdns.txt".format(domain, domain, domain))
-	
-	#os.system("rm ~/Downloads/targets/{}/{}.txt".format(domain, domain))
-	
-	os.system("cat ~/Downloads/targets/{}/sublist3r.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
-	
-	os.system("cat ~/Downloads/targets/{}/subfinder.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
-	
-	os.system("cat ~/Downloads/targets/{}/certspot.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
-	
-	os.system("cat ~/Downloads/targets/{}/censys.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
-	
-	os.system("cat ~/Downloads/targets/{}/gobuster_final.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
-	
-	#os.system("cat ~/Downloads/targets/{}/fdns.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
-	
-	os.system("cat ~/Downloads/targets/{}/amass.txt >> ~/Downloads/targets/{}/merged.txt".format(domain, domain))
-	
-	os.system("sort ~/Downloads/targets/{}/merged.txt | uniq >> ~/Downloads/targets/{}/{}.txt".format(domain, domain, domain))
+        os.system("/root/pentest/enumeration/./subfinder -d {} -silent -o /root/pentest/targets/{}/subfinder.txt".format(domain, domain)) #run subfinder tool #2
 
-	print("\n\n-----------------------Formatting Done-------------------------------\n\n")	
+        os.system("curl -s https://crt.sh/?q=%25.{} |  grep {} | grep TD | sed -e 's/<//g' | sed -e 's/>//g' | sed -e 's/TD//g' | sed -e 's/\///g' | sed -e 's/ //g' | sed -n '1!p' | sort -u >> /root/pentest/targets/{}/certsh.txt".format(domain, domain, domain)) #grep subdomains from crt.sh tool #3
 
-	print("\n\n------------Results are saved in specified folder--------------------\n\n")
+        os.system("python /root/pentest/enumeration/censys-subdomain-finder/censys_subdomain_finder.py {} -o /root/pentest/targets/{}/censys.txt".format(domain, domain)) #run censys tool #4
 
-	print("\n\n------------------Lazy Recon Execution Completed---------------------\n\n")
-	
-	return
+        os.system("/root/go/bin/./gobuster -m dns -t 50 -u {} -w /root/pentest/wordlists/commonspeak2-wordlists/subdomains/subdomains.txt -o /root/pentest/targets/{}/gobuster.txt".format(domain,domain)) #run gobuster tool #5
+
+        os.system("cat /root/pentest/targets/{}/gobuster.txt | cut -d ' ' -f2 | sort -u >> /root/pentest/targets/{}/gobuster_final.txt".format(domain,domain)) #sort gobuster.txt
+
+        os.system("/root/go/bin/./amass enum -d {} -o /root/pentest/targets/{}/amass.txt".format(domain, domain)) #run amass tool #6
+
+        os.system("echo {} >> /root/pentest/targets/{}/{}.txt".format(domain, domain, domain))
+
+        #os.system("python /root/pentest/enumeration/fdns.py /root/pentest/targets/{}/{}.txt".format(domain, domain))
+
+        #os.system("mv ~/Desktop/{} /root/pentest/targets/{}/{}.txt".format(domain, domain, domain))
+
+        os.system("cat /root/pentest/targets/{}/{}.txt |cut -d ',' -f2 | sort -u >> /root/pentest/targets/{}/fdns.txt".format(domain, domain, domain))
+
+        os.system("rm /root/pentest/targets/{}/{}.txt".format(domain, domain))
+
+        os.system("cat /root/pentest/targets/{}/sublist3r.txt >> /root/pentest/targets/{}/merged.txt".format(domain, domain))
+
+        os.system("cat /root/pentest/targets/{}/subfinder.txt >> /root/pentest/targets/{}/merged.txt".format(domain, domain))
+
+        os.system("cat /root/pentest/targets/{}/certsh.txt >> /root/pentest/targets/{}/merged.txt".format(domain, domain))
+
+        os.system("cat /root/pentest/targets/{}/censys.txt >> /root/pentest/targets/{}/merged.txt".format(domain, domain))
+
+        os.system("cat /root/pentest/targets/{}/gobuster_final.txt >> /root/pentest/targets/{}/merged.txt".format(domain, domain))
+
+        os.system("cat /root/pentest/targets/{}/fdns.txt >> /root/pentest/targets/{}/merged.txt".format(domain, domain))
+
+        os.system("cat /root/pentest/targets/{}/amass.txt >> /root/pentest/targets/{}/merged.txt".format(domain, domain))
+
+        os.system("sort /root/pentest/targets/{}/merged.txt | uniq >> /root/pentest/targets/{}/{}.txt".format(domain, domain, domain))
+
+        print("\n\n [!] Results are saved in /root/pentest/targets/{}/ \n\n".format(domain))
+
+        return
 
 
-def uphost(domain):
-	
-	os.system("cat ~/Downloads/targets/{}/{}.txt | filter-resolved > ~/Downloads/targets/{}/uphost-{}.txt".format(domain,domain,domain,domain))
+def uphost(domain): #find uphosts
 
-	return
+        os.system("cat /root/pentest/targets/{}/{}.txt | filter-resolved > /root/pentest/targets/{}/uphost-{}.txt".format(domain,domain,domain,domain))         #tomnomnom's filter-resolved
+        os.system("cat /root/pentest/targets/{}/uphost-{}.txt | httprobe > /root/pentest/targets/{}/alive.txt".format(domain,domain,domain))                    #tomnomnom's httprobe
+        return
+
 
 def httpss(domain): #take screenshots
 
-	os.system("python ~/Downloads/recon/passive/EyeWitness/EyeWitness.py --web -f ~/Downloads/targets/{}/uphost-{}.txt -d ~/Downloads/targets/{}/httpss".format(domain,domain,domain))
+        os.system("python3 /root/pentest/enumeration/EyeWitness/EyeWitness.py --web -f /root/pentest/targets/{}/alive.txt --no-prompt -d /root/pentest/targets/{}/httpss".format(domain,domain))
 
-	return
+        return
+
+
+def portscan(domain):   #portscanning using masscan
+
+        os.system("massdns -r /root/pentest/portscan/massdns/lists/resolvers.txt -t A -o S -w /root/pentest/targets/{}/massdns.out /root/pentest/targets/{}/uphost-{}.txt".format(domain,domain,domain))
+        os.system("cat /root/pentest/targets/paytm.com/massdns.out | cut -f3 | sed -n '/\(\(1\?[0-9][0-9]\?\|2[0-4][0-9]\|25[0-5]\)\.\)\{3\}\(1\?[0-9][0-9]\?\|2[0-4][0-9]\|25[0-5]\)/p' | cut -d \" \" -f3| sort -u > /root/pentest/targets/{}/ips-online.txt".format(domain))
+        os.system("sudo masscan -iL /root/pentest/targets/{}/ips-online.txt --rate 10000 -p1-65535 -oL /root/pentest/targets/{}/masscan.out".format(domain,domain))
+
+
+#def slackbot():
+
+#       slack=""
+#       message=":)"
+#       slack.chat.post_message('#general',message);
+
+#       uphost_file = {
+
+#               'file' : ('/root/pentest/targets/{}/uphost-{}.txt',open('/root/pentest/targets/{}/uphost-{}.txt'
+#        return
 
 
 def main():
-	
-		
-	banner =  """ 
+
+        banner =  """ 
    _     ____  ____ ___  _ ____  _____ ____ ____  _
  / \   /  _ \/_   \\  \///  __\/  __//   _Y  _ \/ \  /|
  | |   | / \| /   / \  / |  \/||  \  |  / | / \|| |\ ||
  | |_/\| |-||/   /_ / /  |    /|  /_ |  \_| \_/|| | \||
  \____/\_/ \|\____//_/   \_/\_\\____\\____|____/\_/  \|
  https://twitter.com/d0tdotslash"""
-	
-	print banner
-	print ("\n\n Usage : python lazyrecon.py\n\n")
-	domain = sys.argv[1]
-	print domain
-	subdomain(domain)
-	uphost(domain)
-	print banner
+
+        print banner
+        domain = sys.argv[1]
+        print domain
+        subdomain(domain)
+        uphost(domain)
+        httpss(domain)
+        #portscan(domain)
+        print banner
+        print ("\nfiles to be reviewed : uphost-{}.txt, httpss dir, masscan.out\n".format(domain)) 
 
 main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
