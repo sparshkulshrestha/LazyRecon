@@ -2,33 +2,21 @@
 
 import os 
 import sys
+import subprocess
 
 def gather_info(target):
 
 	os.system("mkdir /home/sparsh/Documents/shodan-data/"+target)
 	print "Query : ip_str,port,org,hostnames,http.title  Filter : ssl"
-	os.system("shodan search --fields ip_str,port,org,hostnames,http.title ssl:{} --color | tee ~/Documents/shodan-data/{}/results-{}.txt".format(target,target,target))
+	subprocess.call("shodan search --fields ip_str,port,org,hostnames,http.title ssl:%s --color | tee /home/sparsh/Documents/shodan-data/%s/results-%s.txt" % (target, target, target),shell=True)
 	print "Query : ip_str,port,org,hostnames,http.title  Filter : hostname"
-	os.system("shodan search --fields ip_str,port,org,hostnames,http.title hostname:{} --color | tee -a ~/Documents/shodan-data/{}/results-{}.txt".format(target,target,target))
+	subprocess.call("shodan search --fields ip_str,port,org,hostnames,http.title hostname:%s --color | tee -a /home/sparsh/Documents/shodan-data/%s/results-%s.txt" % (target, target, target),shell=True)
 	print "Query : ip_str,port,org,hostnames,http.title  Filter : ssl.cert.subject.cn"
-	os.system("shodan search --fields ip_str,port,org,hostnames,http.title ssl.cert.subject.cn:{} --color | tee -a ~/Documents/shodan-data/{}/results-{}.txt".format(target,target,target))
-
-def formatting(target):
-
-	print "Unique IPs :"
-	os.system("cat ~/Documents/shodan-data/{}/results-{}.txt | awk {{'print $1'}} | sort -u | tee ~/Documents/shodan-data/{}/ips-{}.txt".format(target,target,target,target))
-	print "Taking Screenshot of Found Hosts :"
-	os.system("cat ~/Documents/shodan-data/{}/results-{}.txt | awk {{'print $1,$2'}} | sort -u | sed 's/ /:/' | tee ~/Documents/shodan-data/{}/hosts-{}.txt".format(target,target,target,target))
-	#os.system("python3 /root/pentest/enumeration/EyeWitness/EyeWitness.py -f ~/Documents/shodan-data/{}/hosts-{}.txt".format(target,target))
-
-def open_ports(targets):
-	print "Open Ports"
-
+	subprocess.call("shodan search --fields ip_str,port,org,hostnames,http.title ssl.cert.subject.cn:%s --color | tee -a /home/sparsh/Documents/shodan-data/%s/results-%s.txt" % (target, target, target),shell=True)
 
 def main():
 
 	target = sys.argv[1]
 	gather_info(target)
-	formatting(target)
 
 main()
