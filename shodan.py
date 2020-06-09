@@ -6,7 +6,7 @@ import subprocess
 
 def gather_info(target):
 
-	os.system("mkdir /home/sparsh/Documents/shodan-data/"+target)
+	os.system("mkdir ~/Documents/shodan-data/"+target)
 	print "Query : ip_str,port,org,hostnames,http.title  Filter : ssl"
 	subprocess.call("shodan search --fields ip_str,port,org,hostnames,http.title ssl:%s --color | tee ~/Documents/shodan-data/%s/results-%s.txt" % (target, target, target),shell=True)
 	print "Query : ip_str,port,org,hostnames,http.title  Filter : hostname"
@@ -17,7 +17,7 @@ def gather_info(target):
 def scan(target):
 
 	print "Unique IPs :" #formatting on found data to extract unique IPs
-	os.system("cat ~/Documents/shodan-data/{}/results-{}.txt | awk {{'print $1'}} | sort -u | tee /home/sparsh/Documents/shodan-data/{}/ips-{}.txt".format(target,target,target,target))
+	os.system("cat ~/Documents/shodan-data/{}/results-{}.txt | awk {{'print $1'}} | sort -u | tee ~/Documents/shodan-data/{}/ips-{}.txt".format(target,target,target,target))
 	print "Query : Host " #in-depth scan for unique IPs
 	subprocess.call("cat ~/Documents/shodan-data/%s/ips-%s.txt | while read line; do shodan host \"$line\"; done | tee -a ~/Documents/shodan-data/%s/portscan-%s.txt" % (target, target, target, target),shell=True)
 
