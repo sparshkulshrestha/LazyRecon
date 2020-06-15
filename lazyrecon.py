@@ -53,11 +53,11 @@ def portscan(domain):  # portscanning using masscan
 def runInParallel(*fns):
 	proc = []
 	for fn in fns:
-    	p = Process(target=fn)
-    	p.start()
-    	proc.append(p)
+		p = Process(target=fn)
+		p.start()
+		proc.append(p)
 	for p in proc:
-    	p.join()
+		p.join()
 
 def main():
 
