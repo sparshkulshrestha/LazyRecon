@@ -3,6 +3,7 @@
 import os
 import sys
 import subprocess
+from multiprocessing import Process
 
 def subdomain(domain):
 
@@ -49,6 +50,14 @@ def portscan(domain):  # portscanning using masscan
 	os.system("cat /root/pentest/targets/{}/massdns.out | awk '{print $3}' | sort -u | grep -oE \"\b([0-9]{1,3}\.){3}[0-9]{1,3}\b\" > /root/pentest/targets/{}/ips-online.txt".format(domain, domain))
 	os.system("masscan -iL /root/pentest/targets/{}/ips-online.txt --rate 10000 -p1-65535 --only-open -oL -oG /root/pentest/targets/{}/masscan.out".format(domain, domain))
 
+def runInParallel(*fns):
+	proc = []
+	for fn in fns:
+    	p = Process(target=fn)
+    	p.start()
+    	proc.append(p)
+	for p in proc:
+    	p.join()
 
 def main():
 
@@ -65,8 +74,7 @@ def main():
 	print domain
 	subdomain(domain)
 	uphost(domain)
-	httpss(domain)
-	brute(domain)
+	runInParallel(brute(domain), httpss(domain))
 	#portscan(domain)
 	print banner
 
