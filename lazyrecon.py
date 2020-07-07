@@ -9,7 +9,7 @@ def subdomain(domain):
 
 	os.system("mkdir /root/pentest/targets/"+domain)  # create a directory
 	subprocess.call("python /root/pentest/enumeration/Sublist3r/sublist3r.py -d %s -t 10 -v -o /root/pentest/targets/%s/sublist3r.txt" % (domain, domain), shell=True)
-	subprocess.call("/root/pentest/enumeration/./subfinder -d %s -silent -o /root/pentest/targets/%s/subfinder.txt" % (domain, domain), shell=True)
+	subprocess.call("subfinder -d %s -silent -o /root/pentest/targets/%s/subfinder.txt" % (domain, domain), shell=True)
 	os.system("curl -s https://crt.sh/?q=%25.{} |  grep {} | grep TD | sed -e 's/<//g' | sed -e 's/>//g' | sed -e 's/TD//g' | sed -e 's/\///g' | sed -e 's/ //g' | sed -n '1!p' | sort -u >> /root/pentest/targets/{}/certsh.txt".format(domain, domain, domain))  
 	subprocess.call("/root/go/bin/./amass enum -d %s -o /root/pentest/targets/%s/amass.txt" % (domain, domain), shell=True)
 	subprocess.call("cat /root/pentest/targets/%s/sublist3r.txt >> /root/pentest/targets/%s/merged.txt" % (domain, domain), shell=True)
